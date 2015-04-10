@@ -1,0 +1,26 @@
+{
+  "name": "peer-by-email",
+  "version": "0.0.0",
+  "description": "A tool to respond to incoming email with cjdns peering",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thefinn93/peer-by-email"
+  },
+  "keywords": [
+    "cjdns",
+    "peering"
+  ],
+  "author": "Finn Herzfeld <finn@finn.io>",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/thefinn93/peer-by-email/issues"
+  },
+  "homepage": "https://github.com/thefinn93/peer-by-email",
+  "dependencies": {
+    "inbox": "^1.1.59"
+  }
+}
