@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/thefinn93/peer-by-email",
   "dependencies": {
-    "inbox": "^1.1.59"
+    "inbox": "^1.1.59",
+    "nodemailer": "^1.3.2"
   }
 }

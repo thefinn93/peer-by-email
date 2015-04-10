@@ -16,15 +16,28 @@
  */
 
 
+var smtpTransport = require('nodemailer-smtp-transport');
+
 exports.imap = {
-  host: "imap.seattlemesh.net",
-  port: 993,
-  secure: true,
-  options: {
-    secureConnection: true,
-    auth: {
-      user: "join@hyperboria.network",
-      pass: "hunter12"
-    }
-  }
+ host: 'imap.seattlemesh.net',
+ port: 993,
+ secure: true,
+ options: {
+   secureConnection: true,
+   auth: {
+     user: 'join@hyperboria.network',
+     pass: 'hunter12'
+   }
+ }
 };
+
+// Lots of transport options, see https://github.com/andris9/Nodemailer for info
+exports.outboundTransport = smtpTransport({
+   host: 'mail.seattlemesh.net',
+   port: 589,
+   secure: true,
+   auth: {
+       user: 'join@hyperboria.network',
+       pass: 'hunter12'
+   }
+});
