@@ -32,12 +32,27 @@ exports.imap = {
 };
 
 // Lots of transport options, see https://github.com/andris9/Nodemailer for info
-exports.outboundTransport = smtpTransport({
-   host: 'mail.seattlemesh.net',
-   port: 589,
-   secure: true,
-   auth: {
-       user: 'join@hyperboria.network',
-       pass: 'hunter12'
-   }
-});
+exports.outbound = {
+  transport: smtpTransport({
+    host: 'mail.seattlemesh.net',
+    port: 587,
+    secure: true,
+    auth: {
+      user: 'join@hyperboria.network',
+      pass: 'hunter12'
+    }
+  }),
+  options: {
+    from: 'join@hyperboria.network',
+    template: 'default',
+    subject: 'Hyperboria Peering Information',
+    vars: {
+      ipport: '74.221.208.153:25521',
+      UDPPeer: {  // password gets added when it is generated
+        publicKey: '8hgr62ylugxjyyhxkz254qtz60p781kbswmhhywtbb5rpzc5lxj0.k',
+        hostname: 'seanode.meshwith.me',
+        contact: 'peering@meshwith.me'
+      }
+    }
+  }
+};

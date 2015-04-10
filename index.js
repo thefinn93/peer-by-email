@@ -18,7 +18,9 @@
  */
 
 
-var inbox = require("inbox");
+var inbox = require("inbox"),
+    send  = require('./send');
+
 try {
   var config = require("./config");
 } catch(e) {
@@ -31,8 +33,14 @@ var mailclient = inbox.createConnection(config.imap.port, config.imap.host, conf
 
 var handleMail = function(message) {
   var from = message.from.name + " <" + message.from.address + ">";
-  console.log("Handling message from", from);
-  // console.log(message);
+  var password = Math.random().toString(36).slice(2);
+  console.log("Created password for", from);
+  send(from, password, config.outbound);
+  mailclient.deleteMessage(message.UID, function(err) {
+    if(err) {
+      console.log("Failed to delete message from", from, message.UID, err.stack || err);
+    }
+  });
 };
 
 mailclient.on('connect', function() {
@@ -41,7 +49,6 @@ mailclient.on('connect', function() {
     if(err) {
       throw err;
     } else {
-      console.log(info);
       mailclient.listMessages(-100, function(err, messages) {
         messages.forEach(handleMail);
       });
