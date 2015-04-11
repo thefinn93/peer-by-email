@@ -1,5 +1,8 @@
 # Peer By Email
-This doesn't work at the moment. I'll try to update this a when that's no longer the case.
+This doesn't work at the moment. I'll try to update this a when that's no longer the case. It
+receives mail, generates a password and responds with the password, but the nodejs cjdns admin
+libraries are less than stellar so the password does not actually get added. You can try it out by
+emailing `join@hyperboria.network`.
 
 # Running
 Copy the `config.example.js` to `config.js`. Edit as needed (see [configuration](#Configuration) for
@@ -29,7 +32,7 @@ is generated).
 If you define `exports.sentryDSN` and install `raven` (`$ npm install raven`), any errors will be
 sent to that Sentry DSN. For more info about Sentry, see [getsentry.com](https://getsentry.com). If
 you leave this value out, errors will still be printed to the console, they just wont be sent
-anywhere else. 
+anywhere else.
 
 # Contributing
 Pull requests and bug reports are always nice. I make no promises about actually fixing reported
