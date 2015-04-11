@@ -26,9 +26,10 @@ subject of course, and `vars` is the connection info sent to the user (`password
 is generated).
 
 ## SentryDSN
-If you define `exports.sentryDSN`, any errors will be sent to that Sentry DSN. For more info about
-Sentry, see [getsentry.com](https://getsentry.com). If you leave this value out, errors will still
-be printed to the console, they just wont be sent anywhere else.
+If you define `exports.sentryDSN` and install `raven` (`$ npm install raven`), any errors will be
+sent to that Sentry DSN. For more info about Sentry, see [getsentry.com](https://getsentry.com). If
+you leave this value out, errors will still be printed to the console, they just wont be sent
+anywhere else. 
 
 # Contributing
 Pull requests and bug reports are always nice. I make no promises about actually fixing reported
