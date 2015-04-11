@@ -32,7 +32,8 @@ try {
 var raven;
 
 if(config.sentryDSN) {
-  raven = require('raven').Client(config.sentryDSN);
+  var r = require('raven');
+  raven = new r.Client(config.sentryDSN);
 }
 
 var mailclient = inbox.createConnection(config.imap.port, config.imap.host, config.imap.options);
@@ -41,7 +42,7 @@ var handleMail = function(message) {
   var from = message.from.name + " <" + message.from.address + ">";
   var password = Math.random().toString(36).slice(2);
   console.log("Created password for", from);
-  send(from, password, config.outbound);
+  send(from, password, config.outbound, handleError);
   mailclient.deleteMessage(message.UID, function(err) {
     if(err) {
       handleError(err);
