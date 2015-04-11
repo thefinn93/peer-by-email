@@ -54,14 +54,13 @@ mailclient.on('connect', function() {
       });
     }
   });
+  mailclient.on('new', function(message) {
+    handleMail(message);
+  });
 });
 
 mailclient.on('disconnect', function() {
   console.log("Disconnected from server");
-});
-
-mailclient.on('new', function(message) {
-  handleMail(message);
 });
 
 mailclient.connect();
