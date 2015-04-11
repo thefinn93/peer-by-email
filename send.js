@@ -27,16 +27,16 @@ module.exports = function(to, password, options, handleError) {
     if (err) {
       handleError(err);
     } else {
-      var locals = options.options.vars;
+      var locals = options.vars;
       locals.UDPPeer.password = password;
-      template(options.options.template, locals, function(err, html, text) {
+      template(options.template, locals, function(err, html, text) {
         if (err) {
           handleError(err);
         } else {
           transport.sendMail({
-            from: options.options.from,
+            from: options.from,
             to: to,
-            subject: options.options.subject,
+            subject: options.subject,
             html: html,
             text: text
           }, function(err, responseStatus) {
