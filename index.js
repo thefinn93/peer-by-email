@@ -29,6 +29,12 @@ try {
   process.exit(1);
 }
 
+var raven;
+
+if(config.sentryDSN) {
+  raven = require('raven').Client(config.sentryDSN);
+}
+
 var mailclient = inbox.createConnection(config.imap.port, config.imap.host, config.imap.options);
 
 var handleMail = function(message) {
@@ -38,16 +44,23 @@ var handleMail = function(message) {
   send(from, password, config.outbound);
   mailclient.deleteMessage(message.UID, function(err) {
     if(err) {
-      console.log("Failed to delete message from", from, message.UID, err.stack || err);
+      handleError(err);
     }
   });
 };
+
+function handleError(err) {
+  if(raven) {
+    raven.captureError(err);
+  }
+  console.log(err.stack || err);
+}
 
 mailclient.on('connect', function() {
   console.log("Successfully connected to server");
   mailclient.openMailbox('INBOX', function(err, info) {
     if(err) {
-      throw err;
+      handleError(err);
     } else {
       mailclient.listMessages(-100, function(err, messages) {
         messages.forEach(handleMail);

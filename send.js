@@ -21,24 +21,31 @@ var path  = require('path'),
     nodemailer = require('nodemailer'),
     emailTemplates = require('email-templates');
 
-module.exports = function(to, password, options) {
+module.exports = function(to, password, options, handleError) {
   var transport = nodemailer.createTransport(options.transport);
   emailTemplates(path.join(__dirname, 'templates'), function(err, template) {
-    if (err) throw err;
-    var locals = options.options.vars;
-    locals.UDPPeer.password = password;
-    template(options.options.template, locals, function(err, html, text) {
-      if (err) throw err;
-      transport.sendMail({
-        from: options.options.from,
-        to: to,
-        subject: options.options.subject,
-        html: html,
-        text: text
-      }, function(err, responseStatus) {
-        if(err) throw err;
-        console.log(responseStatus);
+    if (err) {
+      handleError(err);
+    } else {
+      var locals = options.options.vars;
+      locals.UDPPeer.password = password;
+      template(options.options.template, locals, function(err, html, text) {
+        if (err) {
+          handleError(err);
+        } else {
+          transport.sendMail({
+            from: options.options.from,
+            to: to,
+            subject: options.options.subject,
+            html: html,
+            text: text
+          }, function(err, responseStatus) {
+            if(err) {
+              handleError(err);
+            }
+          });
+        }
       });
-    });
+    }
   });
 };
